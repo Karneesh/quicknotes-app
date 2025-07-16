@@ -1,31 +1,79 @@
 /* General body styling */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f7f6;
-  color: #333;
+  background-color: #f4f7f6; /* Light mode background */
+  color: #333; /* Light mode text color */
   margin: 0;
   padding: 20px;
   display: flex;
   justify-content: center;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
+}
+
+/* Dark mode for body */
+body.dark-mode {
+  background-color: #282c34; /* Dark background */
+  color: #e0e0e0; /* Light text */
 }
 
 /* Main app container */
 .app-container {
-  background-color: #ffffff;
+  background-color: #ffffff; /* Light mode background */
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 800px;
   text-align: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+/* Dark mode for app container */
+.app-container.dark-theme {
+  background-color: #3a3f4a; /* Darker background */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
 h1 {
   color: #4CAF50; /* A pleasant green */
-  margin-bottom: 30px;
+  margin: 0; /* Reset margin from default H1 */
   font-size: 2.5em;
   letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode for H1 */
+.app-container.dark-theme h1 {
+  color: #8bc34a; /* Lighter green for dark mode */
+}
+
+/* Theme toggle button */
+.theme-toggle-button {
+  background-color: #607d8b; /* Greyish color */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.theme-toggle-button:hover {
+  background-color: #546e7a;
+  transform: translateY(-2px);
+}
+
+.theme-toggle-button:active {
+  transform: translateY(0);
 }
 
 /* Note input section */
@@ -38,6 +86,13 @@ h1 {
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   background-color: #fdfdfd;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark mode for input section */
+.app-container.dark-theme .note-input-section {
+  background-color: #4a4f5c;
+  border-color: #555c6b;
 }
 
 .note-title-input,
@@ -47,8 +102,24 @@ h1 {
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1em;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  background-color: #fff;
+  color: #333;
 }
+
+/* Dark mode for inputs */
+.app-container.dark-theme .note-title-input,
+.app-container.dark-theme .note-content-input {
+  background-color: #5c6370;
+  border-color: #777;
+  color: #e0e0e0;
+}
+
+.app-container.dark-theme .note-title-input::placeholder,
+.app-container.dark-theme .note-content-input::placeholder {
+  color: #bbb; /* Lighter placeholder text for dark mode */
+}
+
 
 .note-title-input:focus,
 .note-content-input:focus {
@@ -93,6 +164,12 @@ h1 {
   color: #777;
   margin-top: 50px;
   font-size: 1.1em;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode for no notes message */
+.app-container.dark-theme .no-notes-message {
+  color: #bbb;
 }
 
 .notes-grid {
@@ -102,36 +179,61 @@ h1 {
 }
 
 .note-card {
-  background-color: #e8f5e9; /* Lighter green for cards */
+  background-color: #e8f5e9; /* Lighter green for cards (light mode) */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 150px; /* Ensure cards have a minimum height */
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 150px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
 }
+
+/* Dark mode for note cards */
+.app-container.dark-theme .note-card {
+  background-color: #4CAF5022; /* A subtle green tint for dark mode cards */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid #4CAF5055; /* A subtle border */
+}
+
 
 .note-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
 }
 
+.app-container.dark-theme .note-card:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+
 .note-card h3 {
-  color: #2e7d32; /* Darker green for title */
+  color: #2e7d32; /* Darker green for title (light mode) */
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 1.3em;
-  word-wrap: break-word; /* Prevents long titles from overflowing */
+  word-wrap: break-word;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode for note card titles */
+.app-container.dark-theme .note-card h3 {
+  color: #aed581; /* Lighter green for dark mode titles */
 }
 
 .note-card p {
-  color: #555;
+  color: #555; /* Light mode content color */
   font-size: 0.95em;
   line-height: 1.5;
-  flex-grow: 1; /* Allows content to take available space */
-  word-wrap: break-word; /* Prevents long content from overflowing */
+  flex-grow: 1;
+  word-wrap: break-word;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode for note card content */
+.app-container.dark-theme .note-card p {
+  color: #c0c0c0; /* Lighter text for dark mode content */
 }
 
 .note-card .delete-note-button {
@@ -144,7 +246,7 @@ h1 {
   font-size: 0.9em;
   transition: background-color 0.3s ease;
   margin-top: 15px;
-  align-self: flex-start; /* Align button to the left within the card */
+  align-self: flex-start;
 }
 
 .note-card .delete-note-button:hover {
@@ -155,6 +257,12 @@ h1 {
 @media (max-width: 600px) {
   .app-container {
     padding: 20px;
+  }
+
+  .header-section {
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
   }
 
   h1 {
@@ -171,10 +279,10 @@ h1 {
   }
 
   .notes-grid {
-    grid-template-columns: 1fr; /* Stack notes on small screens */
+    grid-template-columns: 1fr;
   }
 
   .note-card {
-    min-height: unset; /* Remove fixed height for better mobile display */
+    min-height: unset;
   }
 }

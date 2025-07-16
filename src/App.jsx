@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import './App.css'; // We'll create this soon
+import './App.css';
 
 function App() {
   const [notes, setNotes] = useState(() => {
-    // Bonus: Load notes from localStorage on initial render
     const savedNotes = localStorage.getItem('quicknotes');
     return savedNotes ? JSON.parse(savedNotes) : [];
   });
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  // New state for theme
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Load theme preference from localStorage, default to false (light mode)
+    const savedTheme = localStorage.getItem('quicknotes-theme');
+    return savedTheme === 'dark';
+  });
 
-  // Bonus: Save notes to localStorage whenever the notes state changes
+  // Save notes to localStorage
   useEffect(() => {
     localStorage.setItem('quicknotes', JSON.stringify(notes));
   }, [notes]);
+
+  // Save theme preference to localStorage
+  useEffect(() => {
+    localStorage.setItem('quicknotes-theme', isDarkMode ? 'dark' : 'light');
+    // Apply theme class to the body element
+    document.body.classList.toggle('dark-mode', isDarkMode);
+  }, [isDarkMode]); // Re-run when isDarkMode changes
 
   const handleAddNote = () => {
     if (title.trim() === '' || content.trim() === '') {
@@ -21,12 +33,12 @@ function App() {
       return;
     }
     const newNote = {
-      id: Date.now(), // Unique ID for each note
+      id: Date.now(),
       title: title,
       content: content,
     };
     setNotes([...notes, newNote]);
-    setTitle(''); // Clear input fields
+    setTitle('');
     setContent('');
   };
 
@@ -34,9 +46,18 @@ function App() {
     setNotes(notes.filter(note => note.id !== id));
   };
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
+
   return (
-    <div className="app-container">
-      <h1>QuickNotes 📝</h1>
+    <div className={`app-container ${isDarkMode ? 'dark-theme' : ''}`}>
+      <div className="header-section">
+        <h1>QuickNotes 📝</h1>
+        <button onClick={toggleDarkMode} className="theme-toggle-button">
+          {isDarkMode ? 'Light Mode ☀️' : 'Dark Mode 🌙'}
+        </button>
+      </div>
 
       <div className="note-input-section">
         <input
